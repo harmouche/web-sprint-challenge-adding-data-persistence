@@ -3,17 +3,14 @@ exports.up = function(knex) {
     return knex.schema
     .table('tasks', tbl => {
         tbl.foreign('project_id')
-        .references('id')
-        .inTable('project');
+        .references('projects.id');
     })
     .createTable('project_resources', tbl => {
+      tbl.increments();
       tbl.foreign('project_id')
-        .references('id')
-        .inTable('project');
+        .references('projects.id');
       tbl.foreign('resource_id')
-        .references('id')
-        .inTable('resources');
-      tbl.primary(['project_id', 'project_resources']);
+        .references('resources.id');
   })
   };
   
