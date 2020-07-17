@@ -1,4 +1,4 @@
-const db = require('../database/dbConfig.js')
+const db = require('../dbConfig.js')
 
 module.exports = {
     add,
@@ -6,7 +6,8 @@ module.exports = {
     findBy,
     findById,
     update,
-    remove
+    remove,
+    getResources
 }
 
 
@@ -29,3 +30,9 @@ function update(id, changes) {
 function remove(id) {
     return db(projects).where('id', Number(id)).del();
 };
+function getResources(id) {
+    return db('projects')
+    .join('project_resources', 'project_resources.project_id', '=','projects.id')
+    .join('resources', 'project_resources.resource_id', '=','resources.id')
+    .select('projects.*', 'resources.*')
+}

@@ -1,20 +1,21 @@
 const express = require('express');
-const taskRouter = express.Router();
-// const Characters = require('./characterModel.js');
+const tasksRouter = express.Router();
+const Tasks = require('../../database/models/taskModel.js');
 
-taskRouter.get('/', (req, res) => {
-    // Characters.find()
-    // .then(response => {
-    //     res.json(response)
-    // })
-    // .catch(err => res.json({error: err, message: err.message}))
-    res.json('tasks working')
+tasksRouter.get('/', (req, res) => {
+    Tasks.find()
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
 })
 
-// taskRouter.post('/', (req, res) => {
-//     res.json({
-//         message: "Server is running on 'http:localhost:/api/' \t",
-//     })
-// })
+tasksRouter.post('/', (req, res) => {
+    Tasks.add(req.body)
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
+})
 
-module.exports = taskRouter
+module.exports = tasksRouter

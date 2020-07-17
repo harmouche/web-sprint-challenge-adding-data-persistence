@@ -1,20 +1,26 @@
 const express = require('express');
-const projectRouter = express.Router();
-// const Characters = require('./characterModel.js');
+const ProjectRouters = express.Router();
+const Projects = require('../../database/models/projectModel.js');
 
-projectRouter.get('/', (req, res) => {
-    // Characters.find()
-    // .then(response => {
-    //     res.json(response)
-    // })
-    // .catch(err => res.json({error: err, message: err.message}))
-    res.json('projects working')
+ProjectRouters.get('/', (req, res) => {
+    Projects.find()
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
 })
 
-// projectRouter.post('/', (req, res) => {
-//     res.json({
-//         message: "Server is running on 'http:localhost:/api/' \t",
-//     })
-// })
+ProjectRouters.post('/', (req, res) => {
+    Projects.add(req.body)
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
+})
+ProjectRouters.get('/:id', (req, res) => {
+    Projects.getResources(req.params.id)
+    .then(response => res.json(response))
+    .catch(err => res.json({error: err, message: err.message}));
+})
 
-module.exports = projectRouter
+module.exports = ProjectRouters

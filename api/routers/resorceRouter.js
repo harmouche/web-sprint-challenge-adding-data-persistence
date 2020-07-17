@@ -1,20 +1,21 @@
 const express = require('express');
 const resourceRouter = express.Router();
-// const Characters = require('./characterModel.js');
+const Resources = require('../../database/models/resorceModel.js');
 
 resourceRouter.get('/', (req, res) => {
-    // Characters.find()
-    // .then(response => {
-    //     res.json(response)
-    // })
-    // .catch(err => res.json({error: err, message: err.message}))
-    res.json('resources working')
+    Resources.find()
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
 })
 
-// resourceRouter.post('/', (req, res) => {
-//     res.json({
-//         message: "Server is running on 'http:localhost:/api/' \t",
-//     })
-// })
+resourceRouter.post('/', (req, res) => {
+    Resources.add(req.body)
+    .then(response => {
+        res.json(response)
+    })
+    .catch(err => res.json({error: err, message: err.message}))
+})
 
 module.exports = resourceRouter

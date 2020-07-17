@@ -1,4 +1,4 @@
-const db = require('../database/dbConfig.js')
+const db = require('../dbConfig.js')
 
 module.exports = {
     add,
@@ -16,6 +16,9 @@ async function add(task) {
 };
 function find() {
     return db('tasks')
+    .join('projects', 'tasks.project_id', '=', 'projects.id')
+    .select('tasks.*', 'projects.name', 'projects.description')
+    
 };
 function findBy(filter) {
     return db('tasks').where(filter);
