@@ -7,7 +7,7 @@ module.exports = {
     findById,
     update,
     remove,
-    getResources
+    findTasks
 }
 
 
@@ -30,9 +30,10 @@ function update(id, changes) {
 function remove(id) {
     return db(projects).where('id', Number(id)).del();
 };
-function getResources(id) {
-    return db('projects')
-    .join('project_resources', 'project_resources.project_id', '=','projects.id')
-    .join('resources', 'project_resources.resource_id', '=','resources.id')
-    .select('projects.*', 'resources.*')
-}
+
+function findTasks(id) {
+    return db('tasks')
+    .where('project_id', Number(id))
+    .join('projects', 'tasks.project_id', '=', 'projects.id')
+    .select('tasks.*', 'projects.name', 'projects.description')
+};

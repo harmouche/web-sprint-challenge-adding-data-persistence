@@ -1,4 +1,5 @@
 const db = require('../dbConfig.js')
+const e = require('express')
 
 module.exports = {
     add,
@@ -11,7 +12,17 @@ module.exports = {
 
 
 async function add(resource) {
-    const [id] = await db('resources').insert(resource)
+    const [id] = await db('resources').insert({
+        name: resource.name,
+        description: resource.description
+    })
+    await resource.projects.forEach(e => {
+        console.log(e)
+        db('project_resources').insert({
+            project_id: e,
+            resource_id: id
+        })
+    })
     return findById(id)
 };
 function find() {
@@ -24,8 +35,8 @@ function findById(id) {
     return db('resources').where({id}).first();
 };
 function update(id, changes) {
-    return db(resources).where({id}).update(changes);
+    return db(`resources`).where({id}).update(changes);
 };
 function remove(id) {
-    return db(resources).where('id', Number(id)).del();
+    return db(`resources`).where('id', Number(id)).del();
 };

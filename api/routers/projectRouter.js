@@ -17,8 +17,10 @@ ProjectRouters.post('/', (req, res) => {
     })
     .catch(err => res.json({error: err, message: err.message}))
 })
-ProjectRouters.get('/:id', (req, res) => {
-    Projects.getResources(req.params.id)
+ProjectRouters.get('/:id/tasks', (req, res) => {
+    console.log(req.params);
+    
+    Projects.findTasks(req.params.id)
     .then(response => res.json(response))
     .catch(err => res.json({error: err, message: err.message}));
 })

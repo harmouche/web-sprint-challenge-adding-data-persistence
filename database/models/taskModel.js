@@ -27,8 +27,8 @@ function findById(id) {
     return db('tasks').where({id}).first();
 };
 function update(id, changes) {
-    return db(tasks).where({id}).update(changes);
+    return db('tasks').where({id}).update(changes);
 };
 function remove(id) {
-    return db(tasks).where('id', Number(id)).del();
+    return db('tasks').where('id', Number(id)).del();
 };
